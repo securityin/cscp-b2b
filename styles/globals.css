@@ -1,0 +1,32 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Microsoft YaHei", "微软雅黑","PingFang SC", "PingFang SC-regular", sans-serif;
+  background-color: #F9F9F9;
+  cursor: default;
+  font-variant: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+@font-face {
+  font-family: 'nasalization';
+  src: local('nasalization'), url(/fonts/nasalization-rg.ttf) format('truetype');
+  font-weight: normal;
+}
+.ant-form-item{
+  margin-bottom: 10px !important;
+}

@@ -1,0 +1,35 @@
+name: Auto Deploy Github Pages (Beta)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    if: github.repository == 'securityin/cscp-b2b'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        
+      - name: Install dependencies
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+
+      - name: Build for production
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: export
+
+      - name: Deploy to securityin/cscp-b2b-deploy
+        uses: hpcodecraft/action-deploy-workspace-to-repo@v2.2
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.SEC_IN_PAT }}
+          SRC_FOLDER: out
+          DEST_OWNER: securityin
+          DEST_REPO: cscp-b2b-deploy
+          DEST_BRANCH: main
+          DEST_FOLDER: docs

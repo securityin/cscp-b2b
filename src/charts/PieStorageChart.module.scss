@@ -1,0 +1,57 @@
+.piePanel {
+    display: flex;
+    width: 0;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    position: relative;
+    height: 260px;
+}
+
+.piePanel2 {
+    @extend .piePanel;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 159px;
+}
+
+.pieTitle {
+    display: flex;
+    align-items: center;
+    color: #858B9C;
+    word-break: keep-all;
+}
+
+.pieStorageTitle {
+    font-size: 18px;
+    color: #41485D;
+    font-weight: 500;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+}
+
+.pieTurnBtn {
+    font-size: 12px;
+    padding: 5px 6px;
+    line-height: unset;
+    font-weight: 500;
+    width: unset;
+    position: absolute;
+    right: 18px;
+    top: 10px;
+}
+
+.pieTitleGroup {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    font-size: 14px;
+    left: 0;
+    justify-content: space-around;
+    height: 40px;
+    align-items: center;
+}

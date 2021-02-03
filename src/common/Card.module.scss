@@ -1,0 +1,149 @@
+.baseText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+    color: #858B9C;
+}
+
+.blackText{
+    @extend .baseText;
+    color:#41485D;
+}
+
+.card {
+    cursor: pointer;
+    @extend .baseText;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 400px;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    &:hover {
+        position: relative;
+        top: -4px;
+        border: solid 1px orange;
+    }
+}
+
+.card2 {
+    height: 159px;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex-grow: 1;
+    width: 0;
+}
+
+.cardHover {
+    @extend .card;
+    position: relative;
+    .hover{
+        // transition: all 200ms ease;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        font-weight: 500;
+        color: #41485D;
+    }
+    &:hover{
+        .hover{
+            left: 0;
+        }
+    }
+}
+
+.icon {
+    padding-left: 20px;
+    flex-shrink: 0;
+}
+
+
+.title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @extend .baseText;
+    font-size: 13px;
+    max-width: 100%;
+}
+
+.text {
+    @extend .blackText;
+    max-width: 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.textV {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    .textVtitle {
+        @extend .baseText;
+        max-width: 100%;
+    }
+    
+    .textVtext {
+        @extend .baseText;
+        padding-top: 0.5rem;
+        font-size: 1.2rem;
+        max-width: 100%;
+        color: #41485D;
+        font-weight: 500;
+    }
+}
+
+
+
+.flexV {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 1.2rem;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.flexVCenter{
+    @extend .flexV;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    text-align: left;
+    font-weight: 500;
+    color: #858B9C;
+    word-break: break-all;
+    white-space: pre-line;
+}
+
+.viewBtn {
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid #EB761C;
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #EB761C;
+    line-height: 30px;
+    text-align: center;
+    white-space: nowrap;
+
+    &:hover {
+        background: #EB761C;
+        color: white;
+    }
+}
