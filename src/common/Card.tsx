@@ -8,7 +8,6 @@ import { from } from 'rxjs'
 import { Tooltip } from './Tooltip'
 import { classNames } from '../base/utils'
 import _ from 'lodash'
-import Column from 'antd/lib/table/Column'
 
 export function Card({ children, onClick }: { children, onClick?: MouseEventHandler | undefined }) {
   return <div className={s.card} onClick={onClick}>
@@ -128,13 +127,4 @@ export function StakeLimitCard({ text }) {
       <ViewBtn text={t('viewStakeLimit')} onClick={() => { window.open('https://apps.crust.network/') }} />
     </div>
   </Card2>
-}
-
-export function OilInfoCard({data}){
-  const { title,  }  = data
-  return <Column>
-    <div className={s.title}>{title}</div>
-    <div className={s.text}>{title}</div>
-    <div className={s.text}>{title}</div>
-  </Column>
 }
