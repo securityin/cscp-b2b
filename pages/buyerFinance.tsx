@@ -11,7 +11,7 @@ export function FinanceOrders({ isBuyer2 = false }) {
   const status = _.get(orderForm, "status", 0);
   if (status < 4) return null;
   const isTurn = _.get(orderForm, "isTurn");
-  if (isBuyer2 && !isTurn) return null;
+  if ((isTurn && !isBuyer2)||(isBuyer2 && !isTurn)) return null;
 
   const doUpdateDemoDataStatus = (status) => {
     updateDemoData({

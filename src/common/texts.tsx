@@ -3,6 +3,7 @@ import { useDemoData } from "../base/hooks";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
+import { getOrderStatus } from "../base/utils";
 export function TwoText({ label, text }) {
   return (
     <Row style={{ width: "100%" , padding: '10px 0'}}>
@@ -50,8 +51,10 @@ export function OrderInfo() {
   const moneyCoin = _.get(orderForm, "moneyCoin");
   const moneyGold = _.get(orderForm, "moneyGold");
   const moneyLoan = _.get(orderForm, "moneyLoan");
+
   return (
     <Col style={{ width: "100%" }}>
+      <TwoText label="订单状态：" text={getOrderStatus(orderForm)}  />
       <span children="交易条款：" style={titleStyle} />
       <TwoText label="" text={transTerm} />
       <span children="货单：" style={titleStyle} />

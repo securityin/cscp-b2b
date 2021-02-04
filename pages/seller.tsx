@@ -11,7 +11,7 @@ import { GoodsInfo } from "../src/common/texts";
 import { useState } from "react";
 import OrderStep5 from "../src/common/OrderStep5";
 import OrderStep6 from "../src/common/OrderStep6";
-function CreateOrder(){
+function CreateOrder() {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm;
   const data = orderForm ? [demoData.orderForm] : [];
@@ -53,76 +53,89 @@ function CreateOrder(){
     if (_.isEmpty(s)) {
       return <span></span>
     }
-    return <Tag style={{position: 'absolute', left: '50%'}} color="success"> {s} </Tag>
+    return <Tag style={{ position: 'absolute', left: '50%' }} color="success"> {s} </Tag>
   }
 
   return (<>
-      <RenderStatus></RenderStatus>
-      <GoodsInfo/>
-      {step === 1 && (
-        <OrderStep1
-          onFinish={(data) => {
-            updateDemoData({ orderForm: {
+    <RenderStatus></RenderStatus>
+    <GoodsInfo />
+    {step === 1 && (
+      <OrderStep1
+        orderForm={orderForm}
+        onFinish={(data) => {
+          updateDemoData({
+            orderForm: {
               ...orderForm, ...data,
-            } });
-            setStep(2)
-          }}
-        />
-      )}
-      {step === 2 && (
-        <OrderStep2
-          onFinish={(data) => {
-            updateDemoData({ orderForm: {
+            }
+          });
+          setStep(2)
+        }}
+      />
+    )}
+    {step === 2 && (
+      <OrderStep2
+        onFinish={(data) => {
+          updateDemoData({
+            orderForm: {
               ...orderForm, ...data,
-            } });
-            setStep(3)
-          }}
-        />
-      )}
-      {step === 3 && (
-        <OrderStep3
-          onFinish={(data) => {
-            updateDemoData({ orderForm: {
+            }
+          });
+          setStep(3)
+        }}
+      />
+    )}
+    {step === 3 && (
+      <OrderStep3
+        onFinish={(data) => {
+          updateDemoData({
+            orderForm: {
               ...orderForm, ...data,
-            } });
-            setStep(4)
-          }}
-        />
-      )}
-      {step === 4 && (
-        <OrderStep4
-          onFinish={(data) => {
-            updateDemoData({ orderForm: {
+            }
+          });
+          setStep(4)
+        }}
+      />
+    )}
+    {step === 4 && (
+      <OrderStep4
+        onFinish={(data) => {
+          updateDemoData({
+            orderForm: {
               ...orderForm, ...data
-            } });
-            setStep(5)
-          }}
-        />
-      )}
-      {step === 5 && (
-        <OrderStep5
-          onFinish={(data) => {
-            updateDemoData({ orderForm: {
+            }
+          });
+          setStep(5)
+        }}
+      />
+    )}
+    {step === 5 && (
+      <OrderStep5
+        onFinish={(data) => {
+          updateDemoData({
+            orderForm: {
               ...orderForm,
-            } });
-            setStep(6)
-          }}
-        />
-      )}
-      {step === 6 && (
-        <OrderStep6 onFinish={(data) => {
-          updateDemoData({ orderForm: {
+            }
+          });
+          setStep(6)
+        }}
+      />
+    )}
+    {step === 6 && (
+      <OrderStep6 onFinish={(data) => {
+        updateDemoData({
+          orderForm: {
             ...orderForm,
             status: 6,
             ...data,
-          } });
-          setStep(7)
-        }}></OrderStep6>
-      )}
+          }
+        });
+        setStep(7)
+      }}></OrderStep6>
+    )}
   </>)
 }
 
-function PendingList(){
+function PendingList() {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm;
   const data = orderForm ? [demoData.orderForm] : [];
@@ -139,11 +152,11 @@ function PendingList(){
           >
             <tbody>
               <tr style={{ backgroundColor: "white" }}>
-                <td style={{ padding: 30}}> {`#${index + 1}`} </td>
-                <td style={{ padding: 30}}> {_.get(value, "buyerName", "")} </td>
-                <td style={{ padding: 30}}> {`意向价：${_.get(value, "intentionAmount", 0)}`}</td>
-                <td style={{ padding: 30}}> {`风险等级：${riskLevel}`} </td>
-                <td style={{ padding: 30}}>
+                <td style={{ padding: 30 }}> {`#${index + 1}`} </td>
+                <td style={{ padding: 30 }}> {_.get(value, "buyerName", "")} </td>
+                <td style={{ padding: 30 }}> {`意向价：${_.get(value, "intentionAmount", 0)}`}</td>
+                <td style={{ padding: 30 }}> {`风险等级：${riskLevel}`} </td>
+                <td style={{ padding: 30 }}>
                   <Col>
                     <Button
                       onClick={() => {
@@ -163,7 +176,7 @@ function PendingList(){
   )
 }
 
-function PendingCreateList(){
+function PendingCreateList() {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm;
   const data = orderForm ? [demoData.orderForm] : [];
@@ -171,14 +184,16 @@ function PendingCreateList(){
   const riskLevel = _.get(orderForm, 'riskLevel', 0);
   const onClickBuyerInfo = () => {
     Modal.info({
-      title: "买家信息",
-      content: "公司名称： xxx公司  电话： xxx-xxxxxx",
+      title: "Buyer infomation",
+      content: "Company： xxx Company<br/>tel-phone： xxx-xxxxxx",
     });
   };
   const onClickCreateOrder = () => {
-    updateDemoData({ orderForm: {
-      ...orderForm, ...data, status: 3
-    } });
+    updateDemoData({
+      orderForm: {
+        ...orderForm, ...data, status: 3
+      }
+    });
   };
   const mColumns2 = [
     ...columns2,
@@ -207,14 +222,14 @@ export default function Seller() {
       return <PendingList />
     }
     if (status === 2) {
-      return  <PendingCreateList />
+      return <PendingCreateList />
     }
     return <CreateOrder />
   }
 
   return (
     <RootLayout>
-      { renderComp() }
+      { renderComp()}
     </RootLayout>
   );
 }
