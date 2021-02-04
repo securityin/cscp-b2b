@@ -9,7 +9,7 @@ import { selectBuyerTab } from "../src/base/root.redux";
 import RootLayout from "../src/common/RootLayout";
 import { OrderInfo } from "../src/common/texts";
 
-export function GoodsList({ isBuyer2 = false}) {
+export function GoodsList({ isBuyer2 = false }) {
   const cards = [1, 2, 3, 4];
   const { demoData, updateDemoData } = useDemoData();
   const [inputModel, setInputModel] = useState(false);
@@ -46,16 +46,16 @@ export function GoodsList({ isBuyer2 = false}) {
           setIntentionAmount(0);
         }}
         onOk={() => {
-          if(isBuyer2) return;
+          if (isBuyer2) return;
           updateDemoData({
             orderForm: { ...orderForm, intentionAmount, status: 1 },
           });
           setInputModel(false);
           setIntentionAmount(0);
           Modal.success({
-            title: 'Success',
-            content: 'Send intent OK!'
-          })
+            title: "Success",
+            content: "Send intent OK!",
+          });
         }}
       >
         <Input
@@ -67,20 +67,20 @@ export function GoodsList({ isBuyer2 = false}) {
   );
 }
 
-export function PendingOrder({isBuyer2 = false}) {
+export function PendingOrder({ isBuyer2 = false }) {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm ?? {};
-  const status = _.get(orderForm, 'status', 0)
-  if(status === 0) return null;
-  const isTurn = _.get(orderForm, 'isTurn' )
-  if(isBuyer2 && !isTurn) return null
+  const status = _.get(orderForm, "status", 0);
+  if (status === 0) return null;
+  const isTurn = _.get(orderForm, "isTurn");
+  if (isBuyer2 && !isTurn) return null;
 
   const doUpdateDemoDataStatus = (status) => {
     updateDemoData({
       orderForm: { ...orderForm, status },
     });
-    Modal.success({})
-  }
+    Modal.success({});
+  };
 
   return (
     <Col style={{ padding: 10 }}>
@@ -97,10 +97,21 @@ export function PendingOrder({isBuyer2 = false}) {
           onClick={() => doUpdateDemoDataStatus(7)}
         />
       )}
-      {status === 8 && (
+      {status === 8 && !isTurn && (
+        <Button
+          children={"Transfer order"}
+          onClick={() => {
+            updateDemoData({
+              orderForm: { ...orderForm, status: 2, isTurn: true },
+            });
+            Modal.success({content: 'Transfer order OK!'});
+          }}
+        />
+      )}
+      {status === 9 && (
         <Button
           children={"Confirm receipt"}
-          onClick={() => doUpdateDemoDataStatus(9)}
+          onClick={() => doUpdateDemoDataStatus(10)}
         />
       )}
     </Col>

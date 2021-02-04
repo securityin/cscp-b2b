@@ -33,10 +33,10 @@ export function FinanceOrders({ isBuyer2 = false }) {
           onClick={() => doUpdateDemoDataStatus(8)}
         />
       )}
-      {status === 9 && (
+      {status === 10 && (
         <Button
-          children={"Confirm receipt"}
-          onClick={() => doUpdateDemoDataStatus(10)}
+          children={"Confirm payment of balance"}
+          onClick={() => doUpdateDemoDataStatus(88)}
         />
       )}
     </>
