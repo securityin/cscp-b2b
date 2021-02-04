@@ -1,15 +1,15 @@
-import { Button, Col, Input, Modal, Row, Table } from "antd";
+import { Button, Col, Input, Modal, Table } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { columns, data } from "../src/base/constans";
-import { useDemoData, useUpdateStore } from "../src/base/hooks";
+import { useDemoData } from "../src/base/hooks";
 import { selectBuyerTab } from "../src/base/root.redux";
 import RootLayout from "../src/common/RootLayout";
-import { GoodsInfo, OrderInfo } from "../src/common/texts";
+import { OrderInfo } from "../src/common/texts";
 
-function GoodsList() {
+export function GoodsList({ isBuyer2 = false}) {
   const cards = [1, 2, 3, 4];
   const { demoData, updateDemoData } = useDemoData();
   const [inputModel, setInputModel] = useState(false);
@@ -46,12 +46,16 @@ function GoodsList() {
           setIntentionAmount(0);
         }}
         onOk={() => {
+          if(isBuyer2) return;
           updateDemoData({
             orderForm: { ...orderForm, intentionAmount, status: 1 },
           });
           setInputModel(false);
           setIntentionAmount(0);
-          // r.push('/seller')
+          Modal.success({
+            title: 'Success',
+            content: 'Send intent OK!'
+          })
         }}
       >
         <Input
@@ -63,20 +67,42 @@ function GoodsList() {
   );
 }
 
-function PendingOrder() {
+export function PendingOrder({isBuyer2 = false}) {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm ?? {};
+  const status = _.get(orderForm, 'status', 0)
+  if(status === 0) return null;
+  const isTurn = _.get(orderForm, 'isTurn' )
+  if(isBuyer2 && !isTurn) return null
+
+  const doUpdateDemoDataStatus = (status) => {
+    updateDemoData({
+      orderForm: { ...orderForm, status },
+    });
+    Modal.success({})
+  }
+
   return (
     <Col style={{ padding: 10 }}>
       <OrderInfo />
-      <Button
-        children={"Determine and pay security deposit"}
-        onClick={() => {
-          updateDemoData({
-            orderForm: { ...orderForm, status: 4 },
-          });
-        }}
-      />
+      {status === 4 && (
+        <Button
+          children={"Determine and pay security deposit"}
+          onClick={() => doUpdateDemoDataStatus(5)}
+        />
+      )}
+      {status === 6 && (
+        <Button
+          children={"Determine and pay service fee"}
+          onClick={() => doUpdateDemoDataStatus(7)}
+        />
+      )}
+      {status === 8 && (
+        <Button
+          children={"Confirm receipt"}
+          onClick={() => doUpdateDemoDataStatus(9)}
+        />
+      )}
     </Col>
   );
 }

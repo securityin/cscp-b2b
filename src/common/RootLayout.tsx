@@ -48,10 +48,9 @@ export default function RootLayout({ children }) {
     >
       <Header className="header" style={{ ...headColors }}>
         <Row justify="space-between" align="middle" style={{ height: "100%" }}>
-          <Row align="middle" style={{ width: 120 }} justify="space-between">
-            <img
+          <img
               src={"./logo.png"}
-              style={{ height: 50, width: 50, cursor: "pointer" }}
+              style={{ height: 40, cursor: "pointer" }}
               onClick={() => {
                 updateDemoData({});
                 // r.push("/");
@@ -60,9 +59,6 @@ export default function RootLayout({ children }) {
                 }
               }}
             />
-            <img src={"./logo2.png"} style={{ height: 20 }}></img>
-          </Row>
-
           <span>{title}</span>
           <Row align="middle">
             <Row align="middle" style={{ cursor: "pointer" }}>
