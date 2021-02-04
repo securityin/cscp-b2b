@@ -56,7 +56,7 @@ export function GoodsList({ isBuyer2 = false }) {
           });
           setInputModel(false);
           setIntentionAmount(0);
-         modalSucess()
+          modalSucess()
         }}
       >
         <Input
@@ -82,7 +82,7 @@ export function PendingOrder({ isBuyer2 = false }) {
     updateDemoData({
       orderForm: { ...orderForm, status },
     });
-   modalSucess()
+    modalSucess()
   };
 
   return (
@@ -107,11 +107,11 @@ export function PendingOrder({ isBuyer2 = false }) {
             updateDemoData({
               orderForm: { ...orderForm, status: 2, isTurn: true },
             });
-           modalSucess()
+            modalSucess()
           }}
         />
       )}
-      {status === 9 && (
+      {(status === 9 || status === 8) && (
         <Button
           children={"Confirm receipt"}
           onClick={() => doUpdateDemoDataStatus(10)}
