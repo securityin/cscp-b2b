@@ -3,6 +3,7 @@ import RootLayout from "../src/common/RootLayout";
 import { OrderInfo } from "../src/common/texts";
 import _ from "lodash";
 import { Button, Modal } from "antd";
+import { modalSucess } from "../src/base/utils";
 
 export function FinanceOrders({ isBuyer2 = false }) {
   const { demoData, updateDemoData } = useDemoData();
@@ -16,7 +17,7 @@ export function FinanceOrders({ isBuyer2 = false }) {
     updateDemoData({
       orderForm: { ...orderForm, status },
     });
-    Modal.success({});
+    modalSucess()
   };
   return (
     <>

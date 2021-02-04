@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { columns, data } from "../src/base/constans";
 import { useDemoData } from "../src/base/hooks";
 import { selectBuyerTab } from "../src/base/root.redux";
+import { modalSucess } from "../src/base/utils";
 import RootLayout from "../src/common/RootLayout";
 import { OrderInfo } from "../src/common/texts";
 
@@ -19,13 +20,13 @@ export function GoodsList({ isBuyer2 = false }) {
   const mColumns = [
     ...columns,
     {
-      title: "",
-      dataIndex: "",
       render: (value) => {
         return (
           <Button
             onClick={() => {
+              if (isBuyer2) return;
               setOrderForm(value);
+              setIntentionAmount(_.toNumber(_.get(value, 'price', 0)));
               setInputModel(true);
             }}
           >
@@ -35,6 +36,8 @@ export function GoodsList({ isBuyer2 = false }) {
       },
     },
   ];
+
+  const canOk = intentionAmount >= _.toNumber(_.get(orderForm, 'price', 0))
   return (
     <>
       <Table columns={mColumns} dataSource={data} pagination={false}></Table>
@@ -45,22 +48,22 @@ export function GoodsList({ isBuyer2 = false }) {
           setInputModel(false);
           setIntentionAmount(0);
         }}
+        okType={canOk ? 'primary' : 'default'}
         onOk={() => {
-          if (isBuyer2) return;
+          if (!canOk) return;
           updateDemoData({
             orderForm: { ...orderForm, intentionAmount, status: 1 },
           });
           setInputModel(false);
           setIntentionAmount(0);
-          Modal.success({
-            title: "Success",
-            content: "Send intent OK!",
-          });
+         modalSucess()
         }}
       >
         <Input
           type="number"
+          value={intentionAmount}
           onChange={(e) => setIntentionAmount(_.toNumber(e.target.value))}
+          required={true}
         ></Input>
       </Modal>
     </>
@@ -79,7 +82,7 @@ export function PendingOrder({ isBuyer2 = false }) {
     updateDemoData({
       orderForm: { ...orderForm, status },
     });
-    Modal.success({});
+   modalSucess()
   };
 
   return (
@@ -104,7 +107,7 @@ export function PendingOrder({ isBuyer2 = false }) {
             updateDemoData({
               orderForm: { ...orderForm, status: 2, isTurn: true },
             });
-            Modal.success({content: 'Transfer order OK!'});
+           modalSucess()
           }}
         />
       )}

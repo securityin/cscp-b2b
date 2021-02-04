@@ -1,3 +1,4 @@
+import { Modal } from 'antd';
 import { join, filter, isEmpty } from 'lodash'
 
 export function classNames(...c) {
@@ -11,10 +12,6 @@ export function elipID(id: string, size = 6) {
   return id
 }
 
-export function setDemoData(){
-
-}
-
-export function subDemoData(){
-
+export function modalSucess() {
+  Modal.success({ content: 'Success' , maskClosable: true});
 }
