@@ -28,10 +28,13 @@ function CreateOrder(){
     if (status == '4' || status == '3') {
       return '待支付保证金'
     }
-    if (status == '5') {
+    if (status == '5' && step === 5) {
       return '公示期'
     }
-    if (status == '7') {
+    if (status == '6' && step === 7) {
+      return '待支付服务费'
+    }
+    if (status == '7' && step === 7) {
       return '待支付服务费'
     }
     if (status == '8') {
@@ -39,6 +42,9 @@ function CreateOrder(){
     }
     if (status == '9') {
       return '待发货'
+    }
+    if (status == '88') {
+      return '订单已完成'
     }
   }
 
@@ -98,7 +104,6 @@ function CreateOrder(){
           onFinish={(data) => {
             updateDemoData({ orderForm: {
               ...orderForm,
-              status: 6,
             } });
             setStep(6)
           }}
@@ -108,7 +113,7 @@ function CreateOrder(){
         <OrderStep6 onFinish={(data) => {
           updateDemoData({ orderForm: {
             ...orderForm,
-            status: 7,
+            status: 6,
             ...data,
           } });
           setStep(7)
