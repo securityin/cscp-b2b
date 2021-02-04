@@ -21,10 +21,10 @@ export function FinanceOrders({ isBuyer2 = false }) {
   return (
     <>
       <OrderInfo />
-      {status === 5 && (
+      {status === 4 && (
         <Button
           children={"Determine and pay security deposit"}
-          onClick={() => doUpdateDemoDataStatus(6)}
+          onClick={() => doUpdateDemoDataStatus(5)}
         />
       )}
       {status === 7 && (

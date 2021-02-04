@@ -85,10 +85,10 @@ export function PendingOrder({isBuyer2 = false}) {
   return (
     <Col style={{ padding: 10 }}>
       <OrderInfo />
-      {status === 4 && (
+      {status === 3 && (
         <Button
           children={"Determine and pay security deposit"}
-          onClick={() => doUpdateDemoDataStatus(5)}
+          onClick={() => doUpdateDemoDataStatus(4)}
         />
       )}
       {status === 6 && (
