@@ -27,7 +27,7 @@ export function GoodsInfo() {
       <TwoText label="交付周期：" text={cycle} />
       <TwoText label="仓库：" text={warehouse} />
       <TwoText label="数量：" text={count} />
-      <TwoText label="总价：" text={price} />
+      <TwoText label="买家意向价：" text={price} />
       <TwoText label="买家：" text={buyerName} />
     </Col>
   );

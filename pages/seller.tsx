@@ -1,4 +1,4 @@
-import { Button, Col, Modal, Row, Table } from "antd";
+import { Button, Col, Modal, Row, Table, Tag } from "antd";
 import { columns, columns2, data } from "../src/base/constans";
 import { useDemoData } from "../src/base/hooks";
 import RootLayout from "../src/common/RootLayout";
@@ -9,14 +9,50 @@ import OrderStep3 from "../src/common/OrderStep3";
 import OrderStep4 from "../src/common/OrderStep4";
 import { GoodsInfo } from "../src/common/texts";
 import { useState } from "react";
+import OrderStep5 from "../src/common/OrderStep5";
+import OrderStep6 from "../src/common/OrderStep6";
 function CreateOrder(){
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm;
   const data = orderForm ? [demoData.orderForm] : [];
   const [step, setStep] = useState(1);
 
+  console.log('step', step)
+
+  const getStatus = () => {
+    if (step < 5) {
+      return ''
+    }
+    const status = _.get(orderForm, 'status', '')
+    console.log('step', step, 'status', status)
+    if (status == '4' || status == '3') {
+      return '待支付保证金'
+    }
+    if (status == '5') {
+      return '公示期'
+    }
+    if (status == '7') {
+      return '待支付服务费'
+    }
+    if (status == '8') {
+      return '二次公示期'
+    }
+    if (status == '9') {
+      return '待发货'
+    }
+  }
+
+  const RenderStatus = () => {
+    const s = getStatus()
+    if (_.isEmpty(s)) {
+      return <span></span>
+    }
+    return <Tag style={{position: 'absolute', left: '50%'}} color="success"> {s} </Tag>
+  }
+
   return (<>
-    <GoodsInfo/>
+      <RenderStatus></RenderStatus>
+      <GoodsInfo/>
       {step === 1 && (
         <OrderStep1
           onFinish={(data) => {
@@ -51,10 +87,32 @@ function CreateOrder(){
         <OrderStep4
           onFinish={(data) => {
             updateDemoData({ orderForm: {
-              ...orderForm, ...data, status: 4
+              ...orderForm, ...data
             } });
+            setStep(5)
           }}
         />
+      )}
+      {step === 5 && (
+        <OrderStep5
+          onFinish={(data) => {
+            updateDemoData({ orderForm: {
+              ...orderForm,
+              status: 6,
+            } });
+            setStep(6)
+          }}
+        />
+      )}
+      {step === 6 && (
+        <OrderStep6 onFinish={(data) => {
+          updateDemoData({ orderForm: {
+            ...orderForm,
+            status: 7,
+            ...data,
+          } });
+          setStep(7)
+        }}></OrderStep6>
       )}
   </>)
 }
@@ -138,11 +196,20 @@ export default function Seller() {
   const { demoData } = useDemoData();
   const orderForm = demoData.orderForm;
   const status = _.get(orderForm, 'status', 0);
+
+  const renderComp = () => {
+    if (status === 1) {
+      return <PendingList />
+    }
+    if (status === 2) {
+      return  <PendingCreateList />
+    }
+    return <CreateOrder />
+  }
+
   return (
     <RootLayout>
-      {status === 1 && <PendingList />}
-      {status === 2 && <PendingCreateList />}
-      {status === 3 && <CreateOrder />}
+      { renderComp() }
     </RootLayout>
   );
 }

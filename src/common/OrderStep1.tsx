@@ -9,6 +9,13 @@ export default function OrderStep1({ onFinish }: { onFinish: (data) => void }) {
       onFinish={onFinish}
     >
       <Form.Item
+        label="真实总价："
+        rules={[{ required: true }]}
+        name={"finalTotalPrice"}
+      >
+        <Input type="number"></Input>
+      </Form.Item>
+      <Form.Item
         label="交易形式："
         rules={[{ required: true }]}
         name={"transType"}
