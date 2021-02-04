@@ -5,6 +5,9 @@ import { useMemo } from "react";
 import { AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
 import { title } from "../base/constans";
 import { useDemoData } from "../base/hooks";
+import SiderBuyer from "./sider/SiderBuyer";
+import SiderBuyerFinance from "./sider/SiderBuyerFinance";
+import SiderSeller from "./sider/SiderSeller";
 import { CTime } from "./texts";
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -13,42 +16,61 @@ export default function RootLayout({ children }) {
   const r = useRouter();
   const cPath = _.isEmpty(r.pathname) ? "/buyer" : r.pathname;
   const user = useMemo(() => {
-    if (_.includes(["/buyer"], cPath)) return "买家(交易员)";
-    if (_.includes(["/seller", "/seller_create"], cPath)) return "卖家";
-    if (_.includes(["/buyerFinance"], cPath)) return "买家(财务)";
-    return "买家(交易员)";
+    if (_.includes(["/buyer"], cPath)) return "Buyer1";
+    if (_.includes(["/buyer2"], cPath)) return "Buyer2";
+    if (_.includes(["/seller", "/seller_create"], cPath)) return "Seller";
+    if (_.includes(["/buyerFinance"], cPath)) return "Buyer1(Finance)";
+    if (_.includes(["/buyerFinance2"], cPath)) return "Buyer2(Finance)";
+    return "Buyer1";
   }, [cPath]);
-  const { updateDemoData } = useDemoData()
+
+  const headColors = useMemo(() => {
+    const colors = {
+      color: "black",
+      backgroundColor: "white",
+    };
+    if (user === "Seller") {
+      colors.backgroundColor = "#EB761C";
+      colors.color = "white";
+    } else if (user === "Buyer1" || user === "Buyer2") {
+      colors.backgroundColor = "#111A34";
+      colors.color = "white";
+    }
+    return colors;
+  }, [user]);
+
+  const { updateDemoData } = useDemoData();
   return (
     <Layout
       style={{
-        minHeight: '100vh'
+        minHeight: "100vh",
       }}
     >
-      <Header
-        className="header"
-        style={{ color: "black", backgroundColor: "white" }}
-      >
+      <Header className="header" style={{ ...headColors }}>
         <Row justify="space-between" align="middle" style={{ height: "100%" }}>
-          <img
-            src={"./logo.jpeg"}
-            style={{ height: 50, width: 50, cursor: "pointer" }}
-            onClick={() => {
-              updateDemoData({})
-              // r.push("/");
-              if(cPath === '/seller_create'){
-                r.replace('/seller')
-              }
-            }}
-          />
+          <Row align="middle" style={{ width: 120 }} justify="space-between">
+            <img
+              src={"./logo.png"}
+              style={{ height: 50, width: 50, cursor: "pointer" }}
+              onClick={() => {
+                updateDemoData({});
+                // r.push("/");
+                if (cPath === "/seller_create") {
+                  r.replace("/seller");
+                }
+              }}
+            />
+            <img src={"./logo2.png"} style={{ height: 20 }}></img>
+          </Row>
+
           <span>{title}</span>
           <Row align="middle">
-            <Row align="middle" style={{cursor:'pointer'}}>
+            <Row align="middle" style={{ cursor: "pointer" }}>
               <AiOutlineUser size={20} /> <div>{user}</div>
             </Row>
-            <div style={{width: 10}}/>
-            <Row align="middle" style={{cursor:'pointer'}}>
-              <AiOutlineSetting size={20} /> <div>设置</div>
+            <div style={{ width: 10 }} />
+            <Row align="middle" style={{ cursor: "pointer" }}>
+              <AiOutlineSetting size={20} /> <div>Setting</div>
             </Row>
           </Row>
         </Row>
@@ -60,7 +82,7 @@ export default function RootLayout({ children }) {
           backgroundColor: "#f0f2f5",
           height: 70,
           padding: 10,
-          position: 'relative'
+          position: "relative",
         }}
       >
         <Row
@@ -85,42 +107,23 @@ export default function RootLayout({ children }) {
           <div style={{ width: 10 }} />
           <Button style={{ borderRadius: 8 }}>MORE ▽</Button>
         </Row>
-        <div style={{ display: 'flex', alignItems: 'center', 
-        height: '100%', position: 'absolute', right: 25, top: 0}}>
-          <CTime/>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "100%",
+            position: "absolute",
+            right: 25,
+            top: 0,
+          }}
+        >
+          <CTime />
         </div>
       </Header>
-      <Layout>
-        <Sider
-          width={200}
-          className="site-layout-background"
-          style={{ paddingLeft: 10, backgroundColor: "unset" }}
-        >
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            style={{ height: "100%", borderRadius: 4 }}
-          >
-            <Menu.SubMenu key={"user"} title={"User Dashboard"}>
-              <Menu.Item key="1">My Profile</Menu.Item>
-              <Menu.Item key="2">Counterparty</Menu.Item>
-              <Menu.Item key="3">Stats</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key={"trans"} title={"Transaction Dashboard"}>
-              <Menu.Item key="4">Search</Menu.Item>
-              <Menu.Item key="5">Ongoing</Menu.Item>
-              <Menu.Item key="6">History</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key={"inbox"} title={"Inbox"}>
-              <Menu.Item key="7">LOIs</Menu.Item>
-              <Menu.Item key="8">Query</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item key="9">Trail</Menu.Item>
-            <Menu.Item key="10">Ducument</Menu.Item>
-            <Menu.Item key="11">Financing</Menu.Item>
-            <Menu.Item key="12">Wallet</Menu.Item>
-          </Menu>
-        </Sider>
+      <Layout hasSider={true}>
+        {(user === "Buyer1" || user === "Buyer2") && <SiderBuyer />}
+        {(user === "Seller") && <SiderSeller />}
+        {(user === 'Buyer1(Finance)' || user === 'Buyer2(Finance)') && <SiderBuyerFinance />}
         <Layout style={{ padding: "0 10px 10px", borderRadius: 4 }}>
           <Content
             className="site-layout-background"

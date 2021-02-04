@@ -35,4 +35,4 @@ export const data = [
   },
 ];
 
-export const title = "中新石化B2B交易平台";
+export const title = "Petro B2B Trading Platform";

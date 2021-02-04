@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
 
-export default function SiderBuyer() {
+export default function SiderSeller() {
   return (
     <Sider
       width={200}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 export function TwoText({ label, text }) {
   return (
-    <Row style={{ width: "100%" , border: '1px solid rgba(0,0,0,0.2)', padding: '10px 0'}}>
+    <Row style={{ width: "100%" , padding: '10px 0'}}>
       <span style={{ width: "16.6%", textAlign: "right" }}>{label}</span>
       <span style={{ flex: 1, textAlign: "left" }}>{text}</span>
     </Row>
