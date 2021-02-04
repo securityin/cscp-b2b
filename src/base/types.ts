@@ -9,11 +9,16 @@ export type OrderForm = {
      * 5: 买家(财务)支付保证金后(公示1期24小时)
      * 6: 公示1期结束后(卖家协调货运，海关，保险)发起服务费支付
      * 7: 买家(交易员)确认支付服务费用。
-     * 8: 买家(财务)确认支付服务费用。
-     * 9: 
-     * 88: 买家(财务)支付服务费用
+     * 8: 买家(财务)确认支付服务费用后（）
+     * 9: 二次公示期结束后
+     * 10: 买家确认收货后
+     * 
+     * ----转单从 2 开始 并标记isTurn 字段
+     * 88: 卖家(财务)确定支付尾款后
      */
     status: number;
+    //是否 转单
+    isTurn: boolean;
     // 货品
     name: string,
     // 交付时段
@@ -26,6 +31,8 @@ export type OrderForm = {
     price: string,
     // 买家
     buyerName: string,
+    // 转单前买家
+    fromBuyerName: string,
     // 风险等级 0, 1,2
     riskLevel: 0;
     // 买家意向价

@@ -2,19 +2,20 @@ import { Button, Col, Input, Modal, Row, Table } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { columns, data } from "../src/base/constans";
-import { useDemoData } from "../src/base/hooks";
+import { useDemoData, useUpdateStore } from "../src/base/hooks";
+import { selectBuyerTab } from "../src/base/root.redux";
 import RootLayout from "../src/common/RootLayout";
 import { GoodsInfo, OrderInfo } from "../src/common/texts";
 
-
-function GoodsList(){
+function GoodsList() {
   const cards = [1, 2, 3, 4];
   const { demoData, updateDemoData } = useDemoData();
   const [inputModel, setInputModel] = useState(false);
   const [intentionAmount, setIntentionAmount] = useState(0);
   const [orderForm, setOrderForm] = useState(null);
-  const r = useRouter()
+  const r = useRouter();
   const mColumns = [
     ...columns,
     {
@@ -28,17 +29,18 @@ function GoodsList(){
               setInputModel(true);
             }}
           >
-            发起意向
+            Send intent
           </Button>
         );
       },
     },
   ];
-  return <>
-    <Table columns={mColumns} dataSource={data} pagination={false}></Table>
+  return (
+    <>
+      <Table columns={mColumns} dataSource={data} pagination={false}></Table>
       <Modal
         visible={inputModel}
-        title={"意向金额"}
+        title={"Intention price"}
         onCancel={() => {
           setInputModel(false);
           setIntentionAmount(0);
@@ -57,31 +59,34 @@ function GoodsList(){
           onChange={(e) => setIntentionAmount(_.toNumber(e.target.value))}
         ></Input>
       </Modal>
-  </>
+    </>
+  );
 }
 
-function PendingOrder(){
+function PendingOrder() {
   const { demoData, updateDemoData } = useDemoData();
-  const orderForm = demoData.orderForm ?? {}
-  return <Col style={{ padding: 10}}>
-      <OrderInfo/>
-      <Button children={'确认并支付保证金'} onClick={() => {
-        updateDemoData({
-          orderForm: { ...orderForm, status: 4 },
-        })
-      }}/>
-  </Col>
+  const orderForm = demoData.orderForm ?? {};
+  return (
+    <Col style={{ padding: 10 }}>
+      <OrderInfo />
+      <Button
+        children={"Determine and pay security deposit"}
+        onClick={() => {
+          updateDemoData({
+            orderForm: { ...orderForm, status: 4 },
+          });
+        }}
+      />
+    </Col>
+  );
 }
-
 
 export default function Buyer() {
-  const { demoData, updateDemoData } = useDemoData();
-  const status = _.get(demoData,'orderForm.status', 0)
-
+  const tab = useSelector(selectBuyerTab);
   return (
     <RootLayout>
-      { status === 0 && <GoodsList/>}
-      { status === 3 && <PendingOrder/>}
+      {tab === "goods" && <GoodsList />}
+      {tab === "orders" && <PendingOrder />}
     </RootLayout>
   );
 }

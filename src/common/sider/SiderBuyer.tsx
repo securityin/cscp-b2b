@@ -2,11 +2,15 @@ import { Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
 import { useState } from "react";
 import _ from 'lodash'
+import { useSelector } from "react-redux";
+import { selectBuyerTab, setBuyerTab } from "../../base/root.redux";
+import { useUpdateStore } from "../../base/hooks";
 
-const Keys = ['goods', 'intents']
+const Keys = ['goods', 'orders']
 
 export default function SiderBuyer() {
-  const [ selectTab, setSelectTab ] = useState(Keys[0])
+  const tab = useSelector(selectBuyerTab)
+  const update = useUpdateStore()
   return (
     <Sider
       width={200}
@@ -15,12 +19,14 @@ export default function SiderBuyer() {
     >
       <Menu
         mode="inline"
-        selectedKeys={[selectTab]}
+        selectedKeys={[tab]}
         style={{ height: "100%", borderRadius: 4 }}
         onSelect={(info) => {
-            if(_.includes(Keys, info.key)) setSelectTab(info.key as string)
+            if(_.includes(Keys, info.key)) update(setBuyerTab(info.key as string))
         }}
       >
+        <Menu.Item key="goods">Goods List</Menu.Item>
+        <Menu.Item key="orders">Orders</Menu.Item>
         <Menu.SubMenu key={"user"} title={"User Dashboard"}>
           <Menu.Item key="1">My Profile</Menu.Item>
           <Menu.Item key="2">Counterparty</Menu.Item>
