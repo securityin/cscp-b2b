@@ -1,8 +1,10 @@
 import { Button, Col, Modal, Table, Tag } from "antd";
 import _ from "lodash";
 import { useState } from "react";
-import { columns, columns2 } from "../src/base/constans";
+import { useSelector } from "react-redux";
+import { columns, columns2, data } from "../src/base/constans";
 import { useDemoData } from "../src/base/hooks";
+import { selectSellerTab } from "../src/base/root.redux";
 import OrderStep1 from "../src/common/OrderStep1";
 import OrderStep2 from "../src/common/OrderStep2";
 import OrderStep3 from "../src/common/OrderStep3";
@@ -178,8 +180,13 @@ function InputStep56() {
   </>
 }
 
+function Published() {
+  return  <Table columns={columns} dataSource={data} pagination={false}></Table>
+}
+
 export default function Seller() {
   const { demoData } = useDemoData();
+  const tab = useSelector(selectSellerTab)
   const orderForm = demoData.orderForm;
   const status = _.get(orderForm, 'status', 0);
   const [showCreate, setShowCreate] = useState(false)
@@ -198,7 +205,8 @@ export default function Seller() {
 
   return (
     <RootLayout>
-      { renderComp()}
+      { tab === 'orders' && renderComp()}
+      { tab === 'published' && <Published/>}
     </RootLayout>
   );
 }

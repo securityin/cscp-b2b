@@ -35,6 +35,7 @@ export function OrderInfo({ children = null, rows = GoodsColums }) {
     }
     return false
   })
+  if(infos.length === 0) return null
   return (
     <Col style={{ width: "70%", marginLeft: '10%', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 10, backgroundColor: 'white' }}>
       <OrderStatus />

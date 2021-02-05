@@ -1,12 +1,9 @@
 import { Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
-import { useState } from "react";
-import _ from 'lodash'
+import _ from 'lodash';
 import { useSelector } from "react-redux";
-import { selectBuyerTab, setBuyerTab } from "../../base/root.redux";
 import { useUpdateStore } from "../../base/hooks";
-
-const Keys = ['goods', 'orders']
+import { BuyerTabType, selectBuyerTab, setBuyerTab } from "../../base/root.redux";
 
 export default function SiderBuyer() {
   const tab = useSelector(selectBuyerTab)
@@ -22,7 +19,7 @@ export default function SiderBuyer() {
         selectedKeys={[tab]}
         style={{ height: "100%", borderRadius: 4 }}
         onSelect={(info) => {
-            if(_.includes(Keys, info.key)) update(setBuyerTab(info.key as string))
+          update(setBuyerTab(info.key as BuyerTabType))
         }}
       >
         <Menu.Item key="goods">Goods List</Menu.Item>
