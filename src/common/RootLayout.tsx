@@ -51,13 +51,6 @@ export default function RootLayout({ children }) {
           <img
               src={"./logo.png"}
               style={{ height: 40, cursor: "pointer" }}
-              onClick={() => {
-                updateDemoData({});
-                // r.push("/");
-                if (cPath === "/seller_create") {
-                  r.replace("/seller");
-                }
-              }}
             />
           <span>{title}</span>
           <Row align="middle">
