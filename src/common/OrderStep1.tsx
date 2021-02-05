@@ -1,7 +1,11 @@
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import _ from 'lodash'
-export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) => void , orderForm?: any}) {
-  
+import { wharfInfos, customsList, agencyCompanys, insuranceCompanys } from "../base/constans";
+
+
+
+
+export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) => void, orderForm?: any }) {
   return (
     <Form
       style={{ width: "100%", paddingTop: 10 }}
@@ -10,7 +14,7 @@ export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) =
       onFinish={onFinish}
     >
       <Form.Item
-        label="真实总价："
+        label="Actual total amount："
         rules={[{ required: true }]}
         name={"finalTotalPrice"}
         initialValue={_.get(orderForm, 'finalTotalPrice')}
@@ -18,7 +22,7 @@ export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) =
         <Input type="number"></Input>
       </Form.Item>
       <Form.Item
-        label="交易形式："
+        label="Order type："
         rules={[{ required: true }]}
         name={"transType"}
         initialValue={_.get(orderForm, 'transType')}
@@ -29,7 +33,7 @@ export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) =
         </Select>
       </Form.Item>
       <Form.Item
-        label="保证金："
+        label="Deposit payment："
         rules={[{ required: true }]}
         name={"securityDeposit"}
         initialValue={_.get(orderForm, 'securityDeposit')}
@@ -37,77 +41,74 @@ export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) =
         <Input type="number"></Input>
       </Form.Item>
       <Form.Item
-        label="出库信息："
+        label="Port of shipment："
         rules={[{ required: true }]}
         name={"outInfo"}
         initialValue={_.get(orderForm, 'outInfo')}
       >
         <Select>
-          <Select.Option value={"珠海xxx码头"}>珠海xxx码头</Select.Option>
-          <Select.Option value={"上海xxx码头"}>上海xxx码头</Select.Option>
-          <Select.Option value={"青岛xxx码头"}>青岛xxx码头</Select.Option>
+          {wharfInfos.map((item, index) => <Select.Option value={item} key={`select_${index}`}>{item}</Select.Option>)}
         </Select>
       </Form.Item>
       <Form.Item
-        label="入库信息："
+        label="Port of destination："
         rules={[{ required: true }]}
         name={"inInfo"}
         initialValue={_.get(orderForm, 'inInfo')}
       >
         <Select>
-          <Select.Option value={"珠海xxx码头"}>珠海xxx码头</Select.Option>
-          <Select.Option value={"上海xxx码头"}>上海xxx码头</Select.Option>
-          <Select.Option value={"青岛xxx码头"}>青岛xxx码头</Select.Option>
+          {wharfInfos.map((item, index) => <Select.Option value={item} key={`select_${index}`}>{item}</Select.Option>)}
         </Select>
       </Form.Item>
       <Form.Item
         initialValue={_.get(orderForm, 'shipping')}
-        label="运费：" rules={[{ required: true }]} name={"shipping"}>
+        label="Shipping：" rules={[{ required: true }]} name={"shipping"}>
         <Input type="number"></Input>
       </Form.Item>
-      <Form.Item label="海关：" rules={[{ required: true }]} style={{marginBottom: 0}}>  
+      <Form.Item label="Customs：" style={{ marginBottom: 0 }}>
         <Form.Item
           initialValue={_.get(orderForm, 'customs')}
+          rules={[{ required: true }]}
           name={'customs'} style={{ width: '32%', display: 'inline-block' }}>
           <Select>
-            <Select.Option value={"珠海xxx关口"}>珠海xxx关口</Select.Option>
-            <Select.Option value={"上海xxx关口"}>上海xxx关口</Select.Option>
-            <Select.Option value={"青岛xxx关口"}>青岛xxx关口</Select.Option>
+          {customsList.map((item, index) => <Select.Option value={item} key={`select_${index}`}>{item}</Select.Option>)}
           </Select>
         </Form.Item>
         <Form.Item
           initialValue={_.get(orderForm, 'customsAgent')}
+          rules={[{ required: true }]}
           name={'customsAgent'} style={{ width: '32%', display: 'inline-block', marginLeft: '2%' }}>
           <Select>
-            <Select.Option value={"A代理公司"}>A代理公司</Select.Option>
-            <Select.Option value={"B代理公司"}>B代理公司</Select.Option>
+          {agencyCompanys.map((item, index) => <Select.Option value={item} key={`select_${index}`}>{item}</Select.Option>)}
           </Select>
         </Form.Item>
         <Form.Item
           initialValue={_.get(orderForm, 'customsFee')}
+          rules={[{ required: true }]}
           name={'customsFee'} style={{ width: '32%', display: 'inline-block', marginLeft: '2%' }}>
-          <Input type={"number"} placeholder={'海关费用'}></Input>
+          <Input type={"number"} placeholder={'Customs Fee'}></Input>
         </Form.Item>
- 
+
       </Form.Item>
-      <Form.Item label="保险：" rules={[{ required: true }]} style={{marginBottom: 0}}>
+      <Form.Item label="Insurance：" style={{ marginBottom: 0 }}>
         <Form.Item
           initialValue={_.get(orderForm, 'insurance')}
+          rules={[{ required: true }]}
           name={'insurance'} style={{ width: '49%', display: 'inline-block' }}>
           <Select>
-            <Select.Option value={"平安保险公司"}>平安保险公司</Select.Option>
-            <Select.Option value={"太平洋保险公司"}>太平洋保险公司</Select.Option>
+          {insuranceCompanys.map((item, index) => <Select.Option value={item} key={`select_${index}`}>{item}</Select.Option>)}
           </Select>
         </Form.Item>
         <Form.Item
           initialValue={_.get(orderForm, 'insuranceFee')}
+          rules={[{ required: true }]}
           name={'insuranceFee'} style={{ width: '49%', display: 'inline-block', marginLeft: '2%' }}>
-          <Input type={"number"} placeholder={'保险费用'}></Input>
+          <Input type={"number"} placeholder={'Insurance Fee'}></Input>
         </Form.Item>
       </Form.Item>
       <Form.Item labelAlign={"right"} wrapperCol={{ offset: 10 }}>
         <Button type={"primary"} htmlType={"submit"}>
-          下一步
+          Next Step
         </Button>
       </Form.Item>
     </Form>

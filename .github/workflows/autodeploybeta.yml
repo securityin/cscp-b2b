@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-deploy:
-    if: github.repository == 'securityin/cscp-b2b-0'
+    if: github.repository == 'securityin/cscp-b2b'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

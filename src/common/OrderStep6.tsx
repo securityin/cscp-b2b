@@ -1,7 +1,5 @@
-import { Button, Col, Form, Input, Row, Select } from "antd";
-import _ from "lodash";
+import { Button, Col, Form, Input } from "antd";
 import { useDemoData, useTranslation } from "../base/hooks";
-import { GoodsInfo, TwoText } from "./texts";
 
 const keysToHidden = ['0', 'key', 'name', 'cycle', 'warehouse', 'price', 'buyerName', 'riskLevel', 'count', 'status']
 
@@ -17,18 +15,18 @@ export default function OrderStep6({ onFinish }: { onFinish: (data) => void }) {
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         onFinish={onFinish}>
-        <Form.Item name={'freightConsort'} label='货运协调' labelAlign={"right"} wrapperCol={{ offset: 1 }} >
-          <Input type='text' placeholder={'货运协调'} style={{width: '50%', margin: 0}}></Input>
+        <Form.Item name={'freightConsort'} label='Freight coordination' labelAlign={"right"} wrapperCol={{ offset: 1 }} >
+          <Input type='text' placeholder={'Freight coordination'} style={{width: '50%', margin: 0}}></Input>
         </Form.Item>
-        <Form.Item name={'customsConsort'} label='海关协调' labelAlign={"right"} wrapperCol={{ offset: 1 }}>
-          <Input type='text' placeholder={'海关协调'} style={{width: '50%', margin: 0}}></Input>
+        <Form.Item name={'customsConsort'} label='Customs coordination' labelAlign={"right"} wrapperCol={{ offset: 1 }}>
+          <Input type='text' placeholder={'Customs coordination'} style={{width: '50%', margin: 0}}></Input>
         </Form.Item>
-        <Form.Item name={'insuranceConsort'} label='保险任务协调' labelAlign={"right"} wrapperCol={{ offset: 1 }}>
-          <Input type='text' placeholder={'保险任务协调'} style={{width: '50%', margin: 0}}></Input>
+        <Form.Item name={'insuranceConsort'} label='Insurance task coordination' labelAlign={"right"} wrapperCol={{ offset: 1 }}>
+          <Input type='text' placeholder={'Insurance task coordination'} style={{width: '50%', margin: 0}}></Input>
         </Form.Item>
         <Form.Item labelAlign={"right"} wrapperCol={{ offset: 8 }}>
           <Button type={"primary"} htmlType={"submit"}>
-            提交
+            Submit
           </Button>
         </Form.Item>
       </Form>

@@ -1,37 +1,69 @@
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { useDemoData } from "../base/hooks";
+import _ from 'lodash';
+import { ValidateStatus } from "antd/lib/form/FormItem";
+import { useMemo, useState } from "react";
 
-export default function OrderStep4({ onFinish }: { onFinish: (data) => void }) {
+const colLayout = {
+  labelCol:{ span: 6 },
+  wrapperCol:{ span: 14 }
+}
+
+export default function OrderStep4({ onFinish, orderForm }: { onFinish: (data) => void, orderForm?: any }) {
+
+  const minCurrency = _.toNumber(_.get(orderForm, 'securityDeposit', 1000))
+  const totalAmount = _.toNumber(_.get(orderForm, 'finalTotalPrice', 1000))
+  const [currency, setCurrency] = useState(0)
+  const [gold, setGold] = useState(0)
+  const [loan, setLoan] = useState(0)
+
+  const validate = useMemo(() => {
+    const data: { sataus: ValidateStatus, message: string } = { sataus: 'success', message: '' }
+    const sucess = totalAmount === currency + gold + loan
+    data.sataus = sucess ? 'success' : 'error'
+    data.message = sucess ? '' : `Total payment must be equal to ${totalAmount}`
+    return data
+  }, [currency, gold, loan])
+
   return (
     <Form
-      style={{ width: "100%" }}
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 14 }}
+      style={{ width: "100%", paddingTop: 10 }}
       onFinish={onFinish}
     >
       <Form.Item
-        label="商币部分：" // 大于保证金
-        rules={[{ required: true }]}
-        name={"moneyCoin"}
+        validateStatus={validate.sataus}
+        help={validate.message}
       >
-        <Input type="number"></Input>
+        <Form.Item
+          {...colLayout}
+          label="Payment component 1(Currency)：" // 大于保证金
+          rules={[{ required: true }]}
+          help={`Range: [${minCurrency}, ${totalAmount}]`}
+          initialValue={minCurrency}
+          name={"moneyCoin"}
+        >
+          <InputNumber min={minCurrency} max={totalAmount} onChange={(e) => setCurrency(_.toNumber(e))} />
+        </Form.Item>
+        <Form.Item
+          {...colLayout}
+          label="Payment component 2(Gold)："
+          name={"moneyGold"}
+          initialValue={_.get(orderForm, 'moneyGold')}
+        >
+          <Input type="number" onChange={(e) => setGold(_.toNumber(e.target.value))} />
+        </Form.Item>
+        <Form.Item
+          {...colLayout}
+          label="Payment component 3(Loan)："
+          name={"moneyLoan"}
+          initialValue={_.get(orderForm, 'moneyLoan')}
+        >
+          <Input type="number" onChange={(e) => setLoan(_.toNumber(e.target.value))} />
+        </Form.Item>
       </Form.Item>
-      <Form.Item
-        label="黄金部分：" 
-        
-        name={"moneyGold"}
-      >
-        <Input type="number"></Input>
-      </Form.Item>
-      <Form.Item
-        label="申请贷款："
-        name={"moneyLoan"}
-      >
-        <Input type="number"></Input>
-      </Form.Item>
-      
       <Form.Item labelAlign={"right"} wrapperCol={{ offset: 10 }}>
         <Button type={"primary"} htmlType={"submit"}>
-          确认并冻结保证金
+          Confirm and freeze margin
         </Button>
       </Form.Item>
     </Form>
