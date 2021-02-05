@@ -1,3 +1,4 @@
+
 export const columns = [
   { title: "Goods", dataIndex: "name" },
   { title: "Trading cycle", dataIndex: "cycle" },
@@ -11,6 +12,18 @@ export const columns2 = [
   { title: "Buyer", dataIndex: "buyerName" },
   { title: "Buyer intention price", dataIndex: "intentionAmount" },
 ];
+
+export const GoodsColums = [
+  ...columns2,
+  { title: 'Buyer intention price', dataIndex: 'intentionAmount' },
+  { title: 'Transaction agreement', dataIndex: 'transTerm' },
+  { title: 'Outbound information', dataIndex: 'outInfo' },
+  { title: 'Inbound information', dataIndex: 'inInfo' },
+  { title: 'Transaction type', dataIndex: 'transType' },
+  { title: 'Commercial currency', dataIndex: 'moneyCoin' },
+  { title: 'Gold count', dataIndex: 'moneyGold' },
+  { title: 'Loan count', dataIndex: 'moneyLoan' },
+]
 
 export const data = [
   {

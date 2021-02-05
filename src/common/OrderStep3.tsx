@@ -9,7 +9,7 @@ export default function OrderStep3({ onFinish }: { onFinish: (data) => void }) {
   const outInfo = _.get(demoData.orderForm, "outInfo");
   const inInfo = _.get(demoData.orderForm, "inInfo");
   const transType = _.get(demoData.orderForm, "transType");
-  const isLongTrans = transType === "长协";
+  const isLongTrans = transType === "Long-term";
   return (
     <Col>
       <TwoText label="出库信息：" text={outInfo} />

@@ -4,10 +4,11 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { getOrderStatus } from "../base/utils";
-export function TwoText({ label, text }) {
+import { GoodsColums } from "../base/constans";
+export function TwoText({ label, text, style = {} }) {
   return (
-    <Row style={{ width: "100%" , padding: '10px 0'}}>
-      <span style={{ width: "16.6%", textAlign: "right" }}>{label}</span>
+    <Row style={{ width: "100%", padding: '6px 0', ...style }}>
+      <span style={{ width: "30%", textAlign: "right" }}>{label}</span>
       <span style={{ flex: 1, textAlign: "left" }}>{text}</span>
     </Row>
   );
@@ -35,43 +36,28 @@ export function GoodsInfo() {
 }
 
 const titleStyle = {
-  fontSize: 16, fontWeight: 600 
+  fontSize: 16, fontWeight: 600
 }
 
-export function OrderInfo() {
+export function OrderInfo({ children = null, rows = GoodsColums }) {
   const { demoData } = useDemoData();
   const orderForm = demoData.orderForm;
-  const transTerm = _.get(orderForm, "transTerm");
-  const outInfo = _.get(orderForm, "outInfo");
-  const inInfo = _.get(orderForm, "inInfo");
-  const transType = _.get(orderForm, "transType");
-  const isLongTrans = transType === "长协";
-  const longTransId = _.get(orderForm, "longTransId");
-
-  const moneyCoin = _.get(orderForm, "moneyCoin");
-  const moneyGold = _.get(orderForm, "moneyGold");
-  const moneyLoan = _.get(orderForm, "moneyLoan");
-
   return (
-    <Col style={{ width: "100%" }}>
-      <TwoText label="订单状态：" text={getOrderStatus(orderForm)}  />
-      <span children="交易条款：" style={titleStyle} />
-      <TwoText label="" text={transTerm} />
-      <span children="货单：" style={titleStyle} />
-      <Col style={{ width: "calc(100% - 20px)", alignSelf: "flex-end" }}>
-        <GoodsInfo />
-        <TwoText label="出库信息：" text={outInfo} />
-        <TwoText label="入库信息：" text={inInfo} />
-        <TwoText label="是否长协：" text={isLongTrans ? "是" : "否"} />
-        {isLongTrans && <TwoText label="长协合同号：" text={longTransId} />}
-      </Col>
-      <span children="资金组成：" style={titleStyle} />
-      <Col style={{ width: "calc(100% - 20px)", alignSelf: "flex-end" }}>
-        <TwoText label="商币：" text={moneyCoin} />
-        <TwoText label="黄金：" text={moneyGold} />
-        <TwoText label="商币：" text={moneyLoan} />
-      </Col>
-      <TwoText label="冻结余额：" text={moneyCoin} />
+    <Col style={{ width: "70%", marginLeft: '10%', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 10, backgroundColor: 'white' }}>
+      <TwoText label="Order status：" text={getOrderStatus(orderForm)} style={{ fontSize: 18, fontWeight: 600}}/>
+      { rows.map((item, index) => {
+        const text = _.get(orderForm, item.dataIndex)
+        if (_.isEmpty(text)) return null
+        if (item.dataIndex === 'transType' && text === 'Long-term') {
+          const longTransId = _.get(orderForm, "longTransId");
+          return <>
+            <TwoText label={`${item.title}：`} text={text} key={`goods_info_item_${index}`} />
+            <TwoText label={`Long-term agreement contract number：`} text={longTransId} key={`trans_item`} />
+          </>
+        }
+        return <TwoText label={`${item.title}：`} text={text} key={`goods_info_item_${index}`} />
+      })}
+      { children }
     </Col>
   );
 }

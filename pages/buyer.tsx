@@ -1,4 +1,6 @@
-import { Button, Col, Input, Modal, Table } from "antd";
+import { Button, Col, Input, Modal, Row, Table } from "antd";
+import ButtonGroup from "antd/lib/button/button-group";
+import Column from "antd/lib/table/Column";
 import _ from "lodash";
 import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
@@ -6,7 +8,7 @@ import { useSelector } from "react-redux";
 import { columns, data } from "../src/base/constans";
 import { useDemoData } from "../src/base/hooks";
 import { selectBuyerTab } from "../src/base/root.redux";
-import { modalSucess } from "../src/base/utils";
+import { notifySucess } from "../src/base/utils";
 import RootLayout from "../src/common/RootLayout";
 import { OrderInfo } from "../src/common/texts";
 
@@ -56,7 +58,7 @@ export function GoodsList({ isBuyer2 = false }) {
           });
           setInputModel(false);
           setIntentionAmount(0);
-          modalSucess()
+          notifySucess()
         }}
       >
         <Input
@@ -76,47 +78,57 @@ export function PendingOrder({ isBuyer2 = false }) {
   const status = _.get(orderForm, "status", 0);
   if (status === 0) return null;
   const isTurn = _.get(orderForm, "isTurn");
-  if ((isTurn && !isBuyer2)||(isBuyer2 && !isTurn)) return null;
+  if ((isTurn && !isBuyer2) || (isBuyer2 && !isTurn)) return null;
 
   const doUpdateDemoDataStatus = (status) => {
     updateDemoData({
       orderForm: { ...orderForm, status },
     });
-    modalSucess()
+    notifySucess()
   };
 
   return (
     <Col style={{ padding: 10 }}>
-      <OrderInfo />
-      {status === 3 && (
-        <Button
-          children={"Determine and pay security deposit"}
-          onClick={() => doUpdateDemoDataStatus(4)}
-        />
-      )}
-      {status === 6 && (
-        <Button
-          children={"Determine and pay service fee"}
-          onClick={() => doUpdateDemoDataStatus(7)}
-        />
-      )}
-      {status === 8 && !isTurn && (
-        <Button
-          children={"Transfer order"}
-          onClick={() => {
-            updateDemoData({
-              orderForm: { ...orderForm, status: 2, isTurn: true },
-            });
-            modalSucess()
-          }}
-        />
-      )}
-      {(status === 9 || status === 8) && (
-        <Button
-          children={"Confirm receipt"}
-          onClick={() => doUpdateDemoDataStatus(10)}
-        />
-      )}
+      <OrderInfo >
+        <Row justify={'center'} gutter={10} style={{ padding: '10px 0' }}>
+          {status === 3 && (
+            <Button
+              type={'primary'}
+              children={"Determine and pay security deposit"}
+              onClick={() => doUpdateDemoDataStatus(4)}
+            />
+          )}
+          {status === 6 && (
+            <Button
+              type={'primary'}
+              children={"Determine and pay service fee"}
+              onClick={() => doUpdateDemoDataStatus(7)}
+            />
+          )}
+          {status === 8 && !isTurn && (
+            <Button
+              type={'primary'}
+              children={"Transfer order"}
+              onClick={() => {
+                updateDemoData({
+                  orderForm: { ...orderForm, status: 2, isTurn: true },
+                });
+                notifySucess()
+              }}
+            />
+          )}
+          {(status === 9 || status === 8) && (
+            <Button
+              type={'primary'}
+              style={{ marginLeft: 10 }}
+              children={"Confirm receipt"}
+              onClick={() => doUpdateDemoDataStatus(10)}
+            />
+          )}
+        </Row>
+      </OrderInfo>
+
+
     </Col>
   );
 }

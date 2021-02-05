@@ -24,8 +24,8 @@ export default function OrderStep1({ onFinish, orderForm }: { onFinish: (data) =
         initialValue={_.get(orderForm, 'transType')}
       >
         <Select>
-          <Select.Option value={"长协"}>长协</Select.Option>
-          <Select.Option value={"现货"}>现货</Select.Option>
+          <Select.Option value={"Long-term"}>Long-term</Select.Option>
+          <Select.Option value={"Spot"}>Spot</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
