@@ -13,9 +13,12 @@ function AppPage({ Component, pageProps }){
     const lisStorage = (e) => {
       const data = localStorage.getItem("demoData");
       const demoDataStr = _.isEmpty(data) ? "{}" : data;
+      console.info('***lisStorage')
       updateDemoData(JSON.parse(demoDataStr), false)
     };
     window.addEventListener("storage", lisStorage);
+    console.info('---addSorageLis---');
+    
     return () => {
       window.removeEventListener("storage", lisStorage);
     };

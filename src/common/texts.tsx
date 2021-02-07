@@ -18,15 +18,13 @@ const titleStyle = {
   fontSize: 16, fontWeight: 600
 }
 
-export function OrderStatus({ }) {
-  const { demoData } = useDemoData();
-  const orderForm = demoData.orderForm;
+export function OrderStatus({ orderForm }) {
   return <TwoText label="Order status：" text={getOrderStatus(orderForm)} style={{ fontSize: 16, fontWeight: 600, color: '#37c414' }} />
 }
 
-export function OrderInfo({ children = null, rows = GoodsColums }) {
-  const { demoData } = useDemoData();
-  const orderForm = demoData.orderForm;
+export function OrderInfo({ children = null, rows = GoodsColums, orderForm}) {
+  // const { demoData } = useDemoData();
+  // const orderForm = demoData.orderForm;
   const infos = _.filter(rows, (item) => { 
     const itemData = _.get(orderForm, item.dataIndex)
     if (itemData) { 
@@ -37,8 +35,8 @@ export function OrderInfo({ children = null, rows = GoodsColums }) {
   })
   if(infos.length === 0) return null
   return (
-    <Col style={{ width: "70%", marginLeft: '10%', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 10, backgroundColor: 'white' }}>
-      <OrderStatus />
+    <Col style={{ width: "100%", border: '1px solid rgba(0,0,0,0.2)', borderRadius: 10, backgroundColor: 'white', padding: 10 }}>
+      <OrderStatus orderForm={orderForm}/>
       { infos.map((item, index) => {
         const text = _.get(orderForm, item.dataIndex)
         if (item.dataIndex === 'transType' && text === 'Long-term') {

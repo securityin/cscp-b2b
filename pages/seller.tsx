@@ -19,7 +19,7 @@ function CreateOrder() {
   const orderForm = demoData.orderForm;
   const [step, setStep] = useState(1);
   return (<>
-    <OrderInfo />
+    <OrderInfo orderForm={orderForm} />
     {step === 1 && (
       <OrderStep1
         orderForm={orderForm}
@@ -147,18 +147,13 @@ function PendingCreateList({ onClickCreate }) {
 function InputStep56() {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm;
-  const data = orderForm ? [demoData.orderForm] : [];
   const [step, setStep] = useState(5);
   return <>
-    <OrderInfo>
+    <OrderInfo orderForm={orderForm}>
       {step === 5 && (
         <OrderStep5
-          onFinish={(data) => {
-            updateDemoData({
-              orderForm: {
-                ...orderForm,
-              }
-            });
+          orderForm={orderForm}
+          onFinish={() => {
             setStep(6)
           }}
         />
@@ -166,22 +161,24 @@ function InputStep56() {
 
     </OrderInfo>
     {step === 6 && (
-      <OrderStep6 onFinish={(data) => {
-        updateDemoData({
-          orderForm: {
-            ...orderForm,
-            status: 6,
-            ...data,
-          }
-        });
-        setStep(7)
-      }}></OrderStep6>
+      <OrderStep6
+        orderForm={orderForm}
+        onFinish={(data) => {
+          updateDemoData({
+            orderForm: {
+              ...orderForm,
+              status: 6,
+              ...data,
+            }
+          });
+          setStep(7)
+        }}></OrderStep6>
     )}
   </>
 }
 
 function Published() {
-  return  <Table columns={columns} dataSource={data} pagination={false}></Table>
+  return <Table columns={columns} dataSource={data} pagination={false}></Table>
 }
 
 export default function Seller() {
@@ -206,7 +203,7 @@ export default function Seller() {
   return (
     <RootLayout>
       { tab === 'orders' && renderComp()}
-      { tab === 'published' && <Published/>}
+      { tab === 'published' && <Published />}
     </RootLayout>
   );
 }

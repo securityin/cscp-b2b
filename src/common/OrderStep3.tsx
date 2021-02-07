@@ -9,7 +9,7 @@ export default function OrderStep3({ onFinish, orderForm }: { onFinish: (data) =
     <Col>
       <Form
         style={{ width: "100%", paddingTop:10 }}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
         onFinish={onFinish}
       >

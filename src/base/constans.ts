@@ -28,24 +28,25 @@ export const GoodsColums = [
   { title: 'Insurance coordination', dataIndex: 'insuranceConsort' },
   { title: 'Logistics information', dataIndex: 'logisticsInfo' },
 ]
+export const goodsOne = {
+  key: "scpc-0",
+  name: "Petro",
+  cycle: "2021-02-02~2021-03-03",
+  warehouse: "ShangHai xx wharf",
+  count: "1000 Barrel",
+  price: 100000,
+  buyerName: "xxx Company",
+  riskLevel: 0,
+}
 
 export const data = [
-  {
-    key: "scpc-0",
-    name: "Petro",
-    cycle: "2021-02-02~2021-03-03",
-    warehouse: "ShangHai xx wharf",
-    count: "1000 Bucket",
-    price: 100000,
-    buyerName: "xxx Company",
-    riskLevel: 0,
-  },
+  goodsOne,
   {
     key: "scpc-1",
     name: "Oil",
     cycle: "2021-02-02~2021-03-03",
     warehouse: "ShangHai xx wharf",
-    count: "500 Bucket",
+    count: "500 Barrel",
     price: 10000,
     buyerName: "xxx Company",
     riskLevel: 1,

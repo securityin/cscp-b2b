@@ -47,11 +47,12 @@ export function useDemoData() {
   const update = useUpdateStore()
   const demoData = useSelector(selectDemoData)
   const updateDemoData = (data, notify = true) => {
-    const dataStr = JSON.stringify(data)
+    const newDemoData = {...demoData, ...data}
+    const dataStr = JSON.stringify(newDemoData)
     if(notify){
       localStorage.setItem('demoData', dataStr)
     }
-    update(setDemoData(data))
+    update(setDemoData(newDemoData))
   } 
   return { updateDemoData , demoData, }
 }

@@ -1,27 +1,17 @@
+import { Button, Row } from "antd";
+import _ from "lodash";
 import { useDemoData } from "../src/base/hooks";
+import { notifySucess } from "../src/base/utils";
 import RootLayout from "../src/common/RootLayout";
 import { OrderInfo, TwoText } from "../src/common/texts";
-import _ from "lodash";
-import { Button, Row } from "antd";
-import { notifySucess } from "../src/base/utils";
-import { useMemo } from "react";
 
 export function FinanceOrders({ isBuyer2 = false }) {
   const { demoData, updateDemoData } = useDemoData();
-  const orderForm = demoData.orderForm ?? {};
+  const key = isBuyer2? 'orderForm2' : 'orderForm'
+  const orderForm = demoData[key] ?? {};
   const status = _.get(orderForm, "status", 0);
-  if (status < 4) return null;
-  const isTurn = _.get(orderForm, "isTurn");
-  if ((isTurn && !isBuyer2) || (isBuyer2 && !isTurn)) return null;
 
-  const doUpdateDemoDataStatus = (status) => {
-    updateDemoData({
-      orderForm: { ...orderForm, status },
-    });
-    notifySucess()
-  };
-
-  const toPay = useMemo(() => {
+  const getToPay = () => { 
     if (status === 4) {
       return _.toNumber(_.get(orderForm, 'securityDeposit', 0))
     }
@@ -32,10 +22,20 @@ export function FinanceOrders({ isBuyer2 = false }) {
       return 80000
     }
     return 0
-  }, [status])
+  }
+  const toPay = getToPay()
+
+  if (status < 4) return null;
+  const doUpdateDemoDataStatus = (status) => {
+    updateDemoData({
+      [key]: { ...orderForm, status },
+    });
+    notifySucess()
+  };
+
 
   return (
-    <OrderInfo >
+    <OrderInfo orderForm={orderForm}>
       {
         toPay > 0 &&
         <TwoText label={'Need to pay：'} text={toPay} style={{ color: '#ec5c08', fontSize: 18, fontWeight: 600 }} />

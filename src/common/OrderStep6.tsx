@@ -3,12 +3,7 @@ import { useDemoData, useTranslation } from "../base/hooks";
 
 const keysToHidden = ['0', 'key', 'name', 'cycle', 'warehouse', 'price', 'buyerName', 'riskLevel', 'count', 'status']
 
-export default function OrderStep6({ onFinish }: { onFinish: (data) => void }) {
-  const { demoData } = useDemoData();
-  const { t } = useTranslation()
-  const orderForm = demoData.orderForm;
-
-
+export default function OrderStep6({ onFinish, orderForm }: { onFinish: (data) => void, orderForm }) {
   return (
     <Col style={{ width: "100%" }}>
       <Form style={{ width: "100%", paddingTop: 10 }}

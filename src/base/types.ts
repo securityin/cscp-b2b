@@ -69,4 +69,5 @@ export type OrderForm = {
 
 export type DemoData = {
     orderForm: any
+    orderForm2: any
 }
