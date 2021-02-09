@@ -1,4 +1,4 @@
-import { Button, Col, Modal, Table, Tag } from "antd";
+import { Button, Col, Modal, Row, Table, Tag } from "antd";
 import _ from "lodash";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -29,11 +29,11 @@ function CreateOrder() {
               ...orderForm, ...data,
             }
           });
-          setStep(2)
+          setStep(3)
         }}
       />
     )}
-    {step === 2 && (
+    {/* {step === 2 && (
       <OrderStep2
         orderForm={orderForm}
         onFinish={(data) => {
@@ -45,7 +45,7 @@ function CreateOrder() {
           setStep(3)
         }}
       />
-    )}
+    )} */}
     {step === 3 && (
       <OrderStep3
         orderForm={orderForm}
@@ -147,6 +147,7 @@ function PendingCreateList({ onClickCreate }) {
 function InputStep56() {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm;
+  const status = _.get(orderForm, 'status', 0)
   const [step, setStep] = useState(5);
   return <>
     <OrderInfo orderForm={orderForm}>
@@ -158,7 +159,12 @@ function InputStep56() {
           }}
         />
       )}
-
+      {status === 8 && <Row justify={'center'}>
+        <Button
+          type={'primary'}
+          children={'Deliver goods'}
+          onClick={() => updateDemoData({ orderForm: { ...orderForm, status: 9 } })} />
+      </Row>}
     </OrderInfo>
     {step === 6 && (
       <OrderStep6

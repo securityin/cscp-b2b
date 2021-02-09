@@ -13,16 +13,16 @@ export default function OrderStep4({ onFinish, orderForm }: { onFinish: (data) =
   const minCurrency = _.toNumber(_.get(orderForm, 'securityDeposit', 1000))
   const totalAmount = _.toNumber(_.get(orderForm, 'finalTotalPrice', 1000))
   const [currency, setCurrency] = useState(0)
-  const [gold, setGold] = useState(0)
+  // const [gold, setGold] = useState(0)
   const [loan, setLoan] = useState(0)
 
   const validate = useMemo(() => {
     const data: { sataus: ValidateStatus, message: string } = { sataus: 'success', message: '' }
-    const sucess = totalAmount === currency + gold + loan
+    const sucess = totalAmount === currency  + loan
     data.sataus = sucess ? 'success' : 'error'
     data.message = sucess ? '' : `Total payment must be equal to ${totalAmount}`
     return data
-  }, [currency, gold, loan])
+  }, [currency, loan])
 
   return (
     <Form
@@ -43,17 +43,17 @@ export default function OrderStep4({ onFinish, orderForm }: { onFinish: (data) =
         >
           <InputNumber min={minCurrency} max={totalAmount} onChange={(e) => setCurrency(_.toNumber(e))} />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           {...colLayout}
           label="Payment component 2(Gold)："
           name={"moneyGold"}
           initialValue={_.get(orderForm, 'moneyGold')}
         >
           <Input type="number" onChange={(e) => setGold(_.toNumber(e.target.value))} />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           {...colLayout}
-          label="Payment component 3(Loan)："
+          label="Payment component 2(Loan)："
           name={"moneyLoan"}
           initialValue={_.get(orderForm, 'moneyLoan')}
         >

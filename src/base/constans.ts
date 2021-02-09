@@ -17,15 +17,19 @@ export const GoodsColums = [
   ...columns2,
   { title: 'Transaction agreement', dataIndex: 'transTerm' },
   { title: 'Port of shipment', dataIndex: 'outInfo' },
+  { title: 'Port of entreport', dataIndex: 'entreportInfo' },
   { title: 'Port of destination', dataIndex: 'inInfo' },
-  { title: 'Order type', dataIndex: 'transType' },
+  // { title: 'Order type', dataIndex: 'transType' },
   { title: 'Payment component 1(Currency)', dataIndex: 'moneyCoin' },
-  { title: 'Payment component 2(Gold)', dataIndex: 'moneyGold' },
-  { title: 'Payment component 3(Loan)', dataIndex: 'moneyLoan' },
+  // { title: 'Payment component 2(Gold)', dataIndex: 'moneyGold' },
+  { title: 'Payment component 2(Loan)', dataIndex: 'moneyLoan' },
   { title: 'Actual total amount', dataIndex: 'finalTotalPrice' },
-  { title: 'Shipment coordination', dataIndex: 'freightConsort' },
-  { title: 'Customs coordination', dataIndex: 'customsConsort' },
-  { title: 'Insurance coordination', dataIndex: 'insuranceConsort' },
+  { title: 'Shipping', dataIndex: 'shipping' },
+  { title: 'Customs fee', dataIndex: 'customsFee' },
+  { title: 'Insurance fee', dataIndex: 'insuranceFee' },
+  { title: 'Shipment coordination', dataIndex: 'freightConsort', showPdf: true },
+  { title: 'Customs coordination', dataIndex: 'customsConsort', showPdf: true },
+  { title: 'Insurance coordination', dataIndex: 'insuranceConsort', showPdf: true },
   { title: 'Logistics information', dataIndex: 'logisticsInfo' },
 ]
 export const goodsOne = {
@@ -55,7 +59,10 @@ export const data = [
 
 export const title = "Petro B2B Trading Platform";
 
-
+export const transportTypes = [
+  'Direct',
+  'Transfer'
+]
 export const wharfInfos = [
   'ZhuHai xxx wharf',
   'ShangHai xxx wharf',
@@ -74,6 +81,11 @@ export const agencyCompanys = [
   'C Agency company',
 ]
 
+export const insuranceTypes = [
+  'Buyer',
+  'Seller'
+]
+
 export const insuranceCompanys = [
   'A Insurance company',
   'B Insurance company',
@@ -90,7 +102,7 @@ export const statusMap = {
   6: 'Pending service fee payment',
   7: 'Pending service fee(Settlement)',
   8: 'Secend order acknowledgement',
-  9: 'Pending final payment',
+  9: 'In transit',
   10: 'Pending final payment(Settlement)',
   88: 'Completed',
 }

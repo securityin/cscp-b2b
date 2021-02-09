@@ -91,15 +91,15 @@ function CreateOrder() {
     {step === 1 && (
       <OrderStep1
         orderForm={orderForm}
-        onFinish={(data) => doUpdateDemoData(data, 2)}
+        onFinish={(data) => doUpdateDemoData(data, 3)}
       />
     )}
-    {step === 2 && (
+    {/* {step === 2 && (
       <OrderStep2
         orderForm={orderForm}
         onFinish={(data) => doUpdateDemoData(data, 3)}
       />
-    )}
+    )} */}
     {step === 3 && (
       <OrderStep3
         orderForm={orderForm}
@@ -119,6 +119,7 @@ function CreateOrder() {
 function InputStep56() {
   const { demoData, updateDemoData } = useDemoData();
   const orderForm = demoData.orderForm2;
+  const status = _.get(orderForm, 'status', 0)
   const [step, setStep] = useState(5);
   return <>
     {step === 5 && (
@@ -143,6 +144,13 @@ function InputStep56() {
           setStep(7)
         }}></OrderStep6>
     )}
+    {status === 8 && <Row justify={'center'}>
+      <Button
+        style={{marginTop: 15}}
+        type={'primary'}
+        children={'Deliver goods'}
+        onClick={() => updateDemoData({ orderForm2: { ...orderForm, status: 9 } })} />
+    </Row>}
   </>
 }
 
@@ -181,7 +189,7 @@ export function PendingOrder({ isBuyer2 = false }) {
               onClick={() => doUpdateDemoDataStatus(7)}
             />
           )}
-          {status === 8 && !isBuyer2 && !orderForm2 && (
+          {status === 9 && !isBuyer2 && !orderForm2 && (
             <Button
               type={'primary'}
               children={"Transfer order"}
@@ -190,7 +198,7 @@ export function PendingOrder({ isBuyer2 = false }) {
                   title: 'Tips',
                   content: 'A 3% fee will be charged for the transfer',
                   maskClosable: true,
-                  onOk: () => { 
+                  onOk: () => {
                     updateDemoData({
                       orderForm2: { ...goodsOne, status: 2, isTurn: true },
                     });
@@ -200,7 +208,7 @@ export function PendingOrder({ isBuyer2 = false }) {
               }}
             />
           )}
-          {(status === 9 || status === 8) && (isBuyer2 || status2 === 88 || !orderForm2) && (
+          {(status === 9) && (isBuyer2 || status2 === 88 || !orderForm2) && (
             <Button
               type={'primary'}
               style={{ marginLeft: 10 }}
@@ -212,11 +220,11 @@ export function PendingOrder({ isBuyer2 = false }) {
       </OrderInfo>
 
       {
-        orderForm2 && !isBuyer2 && <div style={{ width: '100%', padding: 10}}>
+        orderForm2 && !isBuyer2 && <div style={{ width: '100%', padding: 10 }}>
           <span style={{ fontWeight: 600, fontSize: 16 }}>Transfer oreders:</span>
-          { <OrderInfo orderForm={orderForm2} />}
-          { status2 === 2 && <CreateOrder />}
-          { status2 >= 5 && <InputStep56 />}
+          {<OrderInfo orderForm={orderForm2} />}
+          {status2 === 2 && <CreateOrder />}
+          {status2 >= 5 && <InputStep56 />}
         </div>
       }
     </Col>
